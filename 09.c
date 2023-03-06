@@ -16,12 +16,15 @@ int main(void) {
             matriz[i][j] = valor;
         }
     }
-    printf("DIGITE VALOR PARA MULTIPLICAR: \n");
-    scanf("%d", &valor);
     for(int i=1; i<=linhas;i++){
         for(int j=1; j<=colunas; j++){
-            matriz[i][j] = matriz[i][j] * valor;
-            printf("ELEMENTO %d x %d: %d \n", i, j, matriz[i][j]);
+            if(matriz[i][j]<0){
+                matriz[i][j] = matriz[i][j] * -1;
+                printf("ELEMENTO %d x %d: %d \n", i, j, matriz[i][j]);
+            }
+            else{
+                printf("ELEMENTO %d x %d: %d \n", i, j, matriz[i][j]);
+            }
         }
     }
 }
