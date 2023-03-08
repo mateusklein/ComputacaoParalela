@@ -2,7 +2,7 @@
 # Grupo Computacao Paralela
 ## Membros
 * Guilherme Naboa
-* Matheus Klein
+* Mateus Klein
 * Paloma Bezerra
 
 
