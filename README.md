@@ -18,5 +18,5 @@ Após rodar o comando de compilação, execute o arquivo executável gerado pelo
 
 ## Como comprovar que os resultados propostos foram alcançados.
 
-### Laboratório 2
+Rodando o programa e obtendo os resultados esperados dado o enunciado.
 
