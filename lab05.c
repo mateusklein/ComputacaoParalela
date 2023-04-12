@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 
-#define NUM_THREADS 3
+#define NUM_THREADS 25
 
 int mat[NUM_THREADS][NUM_THREADS];
 int vec[NUM_THREADS];
