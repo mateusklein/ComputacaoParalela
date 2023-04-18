@@ -8,22 +8,24 @@ double f(double x){
 	return exp(x);
 }
 
+//inicio do intervalo
 double ini = 1;
-double fin = 10;
+//final do intervalo
+double fin = 9;
+//variavel para guardar o valor total
 double total = 0;
 
 int main(){
   double args[10];
   args[0] = ini;
   double h = (fin-ini)/2;
-  double cont = ini;
+  double cont = ini + h;
   int num=1;
-  while(cont<fin){
-    cont += h;
+  while(cont<=fin){
     args[num] = cont;
+    cont += h;
     num++;
   }
-  num = num+1;
   pthread_t threads[num];
   
   for (int thread_id = 0; thread_id < num; thread_id++) {
@@ -40,7 +42,7 @@ int main(){
 }
 
 void *Pth_trap(void *rank) {
-  int *i = rank;
+  double *i = rank;
   if(*i==ini){
     total = (total + f(*i));
   }
