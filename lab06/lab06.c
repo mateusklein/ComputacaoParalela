@@ -22,21 +22,22 @@ int main(){
   double h = (fin-ini)/n_int;
   double cont = ini;
   int num=0;
-  while(cont<=fin){
+  while(cont<fin){
     args[num] = cont;
-    printf("ARGS ESTA VALENDO %f \n", args[num]);
     cont += h;
     num++;
   }
+  args[num] = fin;
   pthread_t threads[n_int+1];
   
-  for (int thread_id = 0; thread_id < num; thread_id++) {
+  for (int thread_id = 0; thread_id <= num; thread_id++) {
     pthread_create(&threads[thread_id], NULL, Pth_trap, &args[thread_id]);
   }
 
-  for (int thread_id = 0; thread_id < num; thread_id++) {
+  for (int thread_id = 0; thread_id <= num; thread_id++) {
     pthread_join(threads[thread_id], NULL);
   }
+  total = (h/2)*total;
 
   printf("resultado para o intervalo [%f,%f] é: %f \n", ini, fin, total);
 
@@ -45,14 +46,11 @@ int main(){
 
 void *Pth_trap(void *rank) {
   double *i = rank;
-  printf("Vale: %f \n", *i);
   if(*i==ini){
     total = (total + f(*i));
   }
   else if(*i==fin){
-    int div = ((fin - ini) /2) /2;
-    total = total + f(*i);
-    total = div * total;
+    total = (total + f(*i));
   }
   else{
     total = (total + (2 * f(*i)));
