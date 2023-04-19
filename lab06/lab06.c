@@ -46,10 +46,7 @@ int main(){
 
 void *Pth_trap(void *rank) {
   double *i = rank;
-  if(*i==ini){
-    total = (total + f(*i));
-  }
-  else if(*i==fin){
+  if(*i==ini || *i==fin){
     total = (total + f(*i));
   }
   else{
