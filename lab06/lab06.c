@@ -9,24 +9,26 @@ double f(double x){
 }
 
 //inicio do intervalo
-double ini = 1;
+double ini = 2;
 //final do intervalo
-double fin = 9;
+double fin = 2.6;
+//variavel que define o numero de intervalos + um (respectivamente o numero de threads)
+int n_int = 6;
 //variavel para guardar o valor total
 double total = 0;
 
 int main(){
-  double args[10];
-  args[0] = ini;
-  double h = (fin-ini)/2;
-  double cont = ini + h;
-  int num=1;
+  double args[n_int+1];
+  double h = (fin-ini)/n_int;
+  double cont = ini;
+  int num=0;
   while(cont<=fin){
     args[num] = cont;
+    printf("ARGS ESTA VALENDO %f \n", args[num]);
     cont += h;
     num++;
   }
-  pthread_t threads[num];
+  pthread_t threads[n_int+1];
   
   for (int thread_id = 0; thread_id < num; thread_id++) {
     pthread_create(&threads[thread_id], NULL, Pth_trap, &args[thread_id]);
@@ -43,6 +45,7 @@ int main(){
 
 void *Pth_trap(void *rank) {
   double *i = rank;
+  printf("Vale: %f \n", *i);
   if(*i==ini){
     total = (total + f(*i));
   }
