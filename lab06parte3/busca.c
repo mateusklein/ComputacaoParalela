@@ -7,11 +7,10 @@
 
 int main(){
   srand(time(NULL));
-  int num = 10;
+  int num = 1000;
   int i=0;
   int lista[num]; 
-  int n_proc = rand()%num;  
-  printf("num procurado: %d \n", n_proc); 
+  int n_proc = rand()%num;
   int index_proc = -1;
   do{
     lista[i] = rand()%num;
@@ -22,14 +21,12 @@ int main(){
       }
     }
     if(igual == 0){
-      printf("vetor %d: %d \n", i, lista[i]); 
       i++;
     }
   }while(i<num);
     
   #pragma omp parallel num_threads(NUM_THREADS)
   {
-      printf("entrou na thread %d \n", omp_get_thread_num());
       int t = omp_get_thread_num();
       int num_t = omp_get_num_threads();
       int intervalo = num/num_t;
