@@ -1,4 +1,4 @@
-#readme para lab06 parte 3
+readme para lab06 parte 3
 
 compile da seguinte forma: gcc busca.c -o teste -fopenmp -lm 
 
