@@ -1,29 +1,36 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <omp.h>
 #include <time.h>
 
 #define NUM_THREADS 10
 
-int main(){
-  srand(time(NULL));
-  int num = 1000;
-  int i=0;
-  int lista[num]; 
-  int n_proc = rand()%num;
-  int index_proc = -1;
-  do{
-    lista[i] = rand()%num;
-    int igual = 0; 
-    for(int j=0; j<i; j++){ 
-      if(lista[j] == lista[i]){
-        igual = 1;
-      }
-    }
-    if(igual == 0){
+int main(int argc, char* argv[]){
+  int lista[100000];
+  FILE *arq;
+  char Linha[100];
+  char *result;
+  int i;
+  arq = fopen("vetor1.txt", "rt");
+  if (arq == NULL) {
+     printf("Problemas na abertura do arquivo\n");
+  }
+  i = 1;
+  while (!feof(arq)){
+      result = fgets(Linha, 100, arq);
+      if (result)
+	  lista[i] = strtol(Linha, NULL, 10);
       i++;
-    }
-  }while(i<num);
+  }
+  fclose(arq);  
+
+
+  srand(time(NULL));
+  int num = i;
+  i=0;
+  int n_proc = strtol(argv[1], NULL, 10);
+  int index_proc = -1;
     
   #pragma omp parallel num_threads(NUM_THREADS)
   {
