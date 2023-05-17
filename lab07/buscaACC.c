@@ -1,54 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <omp.h>
+#include <openacc.h>
 #include <time.h>
+#include <string.h>
 
-#define NUM_THREADS 10
+#define SIZE 1000
 
-int main(int argc, char* argv[]){
-  int lista[100000];
-  FILE *arq;
-  char Linha[100];
-  char *result;
-  int i;
-  arq = fopen("vetor1.txt", "rt");
-  if (arq == NULL) {
-     printf("Problemas na abertura do arquivo\n");
-  }
-  i = 1;
-  while (!feof(arq)){
-      result = fgets(Linha, 100, arq);
-      if (result)
-	  lista[i] = strtol(Linha, NULL, 10);
-      i++;
-  }
-  fclose(arq);  
-
-
+int main() {
   srand(time(NULL));
-  int num = i;
-  i=0;
-  int n_proc = strtol(argv[1], NULL, 10);
-  int index_proc = -1;
+  int vector[SIZE];
+  int element;
+
     
-  #pragma omp parallel num_threads(NUM_THREADS)
-  {
-      int t = omp_get_thread_num();
-      int num_t = omp_get_num_threads();
-      int intervalo = num/num_t;
-      int ini = t * intervalo;
-      int fim = ini + intervalo;
-      for(int j=ini; j<fim; j++){
-      	 if(lista[j]==n_proc){
-		 #pragma omp critical
-		 {
-			 if(index_proc == -1){
-           		    index_proc = j;
-			 }
-		 }
-           }
-       }
+  for (int i = 0; i < SIZE; i++) {
+    vector[i] = rand() % 1000;
   }
-  printf("Index do elemento procurado: %d \n", index_proc);
+  
+  element = rand() % 1000;
+  int index = -1;
+
+  #pragma acc parallel loop
+  for (int i = 0; i < SIZE; i++) {
+    if (vector[i] == element) {
+        index = i;
+      }
+  }
+  if (index == -1) {
+    printf("Elemento não encontrado.\n");
+  } else {
+    printf("Elemento encontrado no índice %d.\n", index);
+  }
+
+  return 0;
 }
